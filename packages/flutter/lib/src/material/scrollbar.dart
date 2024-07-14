@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/foundation.dart';
 
 import 'color_scheme.dart';
 import 'material_state.dart';
@@ -211,7 +212,7 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
   late bool _useAndroidScrollbar;
 
   @override
-  bool get showScrollbar => widget.thumbVisibility ?? _scrollbarTheme.thumbVisibility?.resolve(_states) ?? false;
+  bool get showScrollbar => widget.thumbVisibility ?? _scrollbarTheme.thumbVisibility?.resolve(_states) ?? kIsAndroidTV;
 
   @override
   bool get enableGestures => widget.interactive ?? _scrollbarTheme.interactive ?? !_useAndroidScrollbar;
@@ -327,7 +328,7 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
     _scrollbarTheme = ScrollbarTheme.of(context);
     switch (theme.platform) {
       case TargetPlatform.android:
-        _useAndroidScrollbar = true;
+        _useAndroidScrollbar = !kIsAndroidTV;
       case TargetPlatform.iOS:
       case TargetPlatform.linux:
       case TargetPlatform.fuchsia:
