@@ -78,3 +78,5 @@ const double precisionErrorTolerance = 1e-10;
 /// * [dart:io.Platform], a way to find out the browser's platform that is not
 ///   overridable in tests.
 const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
+///
+bool kIsAndroidTV = false;

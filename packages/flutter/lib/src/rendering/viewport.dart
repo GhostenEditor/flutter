@@ -890,6 +890,7 @@ abstract class RenderViewportBase<ParentDataClass extends ContainerParentDataMix
           pivotExtent = pivot.size.height;
       }
       rect ??= target.paintBounds;
+      rect = Rect.fromLTRB(rect.left - 72, rect.top - 72, rect.right + 72, rect.bottom + 72);
       rectLocal = MatrixUtils.transformRect(target.getTransformTo(pivot), rect);
     } else if (onlySlivers) {
       // `pivot` does not exist. We'll have to make up one from `target`, the

@@ -192,8 +192,8 @@ abstract class FocusTraversalPolicy with Diagnosticable {
       node.context!,
       alignment: alignment ?? 1,
       alignmentPolicy: alignmentPolicy ?? ScrollPositionAlignmentPolicy.explicit,
-      duration: duration ?? Duration.zero,
-      curve: curve ?? Curves.ease,
+      duration: duration ?? const Duration(milliseconds: 400),
+      curve: curve ?? Curves.easeOut,
     );
   }
 

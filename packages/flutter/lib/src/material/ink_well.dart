@@ -1357,7 +1357,11 @@ class _InkResponseState extends State<_InkResponseStateWidget>
                   onSecondaryTapCancel: _secondaryEnabled ? handleSecondaryTapCancel : null,
                   behavior: HitTestBehavior.opaque,
                   excludeFromSemantics: true,
-                  child: widget.child,
+                  child: !kIsAndroidTV ? widget.child : Stack(alignment: Alignment.center, children: [
+                    if (widget.child != null) widget.child!,
+                    if (_shouldShowFocus)
+                      const _OutlineBorder(),
+                  ]),
                 ),
               ),
             ),
@@ -1489,3 +1493,50 @@ class InkWell extends InkResponse {
     enableFeedback: enableFeedback ?? true,
   );
 }
+
+class _OutlineBorder extends StatefulWidget {
+  const _OutlineBorder();
+
+  @override
+  State<_OutlineBorder> createState() => _OutlineBorderState();
+}
+class _OutlineBorderState extends State<_OutlineBorder> with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 1),
+    vsync: this,
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 0,
+      top: 0,
+      bottom: 0,
+      right: 0,
+      child: IgnorePointer(
+        child: AnimatedBuilder(
+          builder: (BuildContext context, Widget? child) => Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                    width: 4,
+                    color: Color.lerp(
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.inversePrimary,
+                      _controller.value,
+                    ) ??
+                        const Color(0x00000000)),
+                borderRadius: BorderRadius.circular(2),
+              )),
+          animation: _controller,
+        ),
+      ),
+    );
+  }
+}
+
