@@ -93,3 +93,5 @@ const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
 /// * [dart:io.Platform], a way to find out the browser's platform that is not
 ///   overridable in tests.
 const bool kIsWasm = bool.fromEnvironment('dart.tool.dart2wasm');
+
+bool kIsAndroidTV = false;
